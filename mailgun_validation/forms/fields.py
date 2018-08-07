@@ -7,6 +7,7 @@ class EmailField(DjangoEmailField):
 
      def __init__(self, *args, **kwargs):
          use_mailgun = kwargs.pop('use_mailgun', True)
-         super(EmailField, self).__init__(*args, **kwargs)
+         validators = ()
          if use_mailgun:
-             self.default_validators = [mailgun_validation]
+             validators = (mailgun_validation,)
+         super(EmailField, self).__init__(*args, validators=validators, **kwargs)
